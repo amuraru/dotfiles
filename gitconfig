@@ -1,0 +1,220 @@
+[user]
+	name = Adi Muraru
+
+[core]
+  editor = vim
+  excludesfile = /Users/amuraru/.gitignore
+  pager = delta
+[delta]
+    theme = zenburn
+    features = unobtrusive-line-numbers decorations
+    whitespace-error-style = 22 reverse
+
+[delta "unobtrusive-line-numbers"]
+    line-numbers = true
+    line-numbers-minus-style = "#444444"
+    line-numbers-zero-style = "#444444"
+    line-numbers-plus-style = "#444444"
+    line-numbers-left-format = {nm:>4}┊
+    line-numbers-right-format = {np:>4}│
+    line-numbers-left-style = blue
+    line-numbers-right-style = blue
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+# set your user tokens as environment variables, such as ~/.secrets
+# See the README for examples.
+#[url "https://github.com"]
+#  insteadOf = git://github.com
+
+[push]
+  default = tracking
+
+[pull]
+	rebase = merges
+
+[fetch]
+  prune = true
+
+
+[diff]
+  tool = meld
+  submodule = log
+  # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
+  # instead of a/b/c/d as prefixes for patches
+  mnemonicprefix = true
+  algorithm = patience
+	colorMoved = zebra
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[difftool]
+	prompt = false
+[difftool "meld"]
+  trustExitCode = true
+  cmd = /Applications/Meld.app/Contents/MacOS/Meld \"$LOCAL\" \"$PWD/$REMOTE\"
+
+[color]
+    ui = auto
+
+[color "branch"]
+
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[format]
+  pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
+
+[merge]
+  summary = true
+  verbosity = 1
+  tool = vscode
+  ff = only
+
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+
+[mergetool "sublimerge"]
+	cmd = subl -n --wait \"$REMOTE\" \"$BASE\" \"$LOCAL\" \"$MERGED\" --command \"sublimerge_diff_views\"
+	trustExitCode = false
+
+
+[mergetool]
+  prompt = false
+  keepTemporaries = false
+
+[mergetool "meld"]
+    trustExitCode = true
+      cmd = open -W -a Meld --args --auto-merge \"$PWD/$LOCAL\" \"$PWD/$BASE\" \"$PWD/$REMOTE\" --output=\"$PWD/$MERGED\"
+
+[apply]
+  whitespace = nowarn
+
+[branch]
+  autosetupmerge = false
+  autosetuprebase = always
+
+[advice]
+  statusHints = false
+
+[rerere]
+  # Remember my merges
+  # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
+  enabled = false
+
+[include]
+  path = .gitconfig.user
+  path = ~/.delta/themes.gitconfig
+
+[filter "media"]
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+
+[grep]
+  extendRegexp = true
+  lineNumber = true
+
+[alias]
+
+  stagenw = !sh -c 'git diff -w --no-color $@ | git apply --cached --ignore-whitespace' -
+
+  # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+  snapshot = !git stash save -u snapshot: $(date) && git stash apply stash@{0}
+  snapshots = !git stash list --grep snapshot
+
+  # checkout
+  # cherry-pick
+  cp = cherry-pick # grab a change from a branch
+
+  # diff
+  dc = diff --cached # diff staged changes
+  last = diff HEAD^ # diff last committed change
+
+  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+  short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+  simple = log --pretty=format:\" * %s\"
+  shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+
+  # reset
+  unstage = reset HEAD # remove files from index (tracking)
+  uncommit = reset --soft HEAD^ # go back before last commit, with files in uncommitted state
+  filelog = log -u # show changes to a file
+  mt = mergetool # fire up the merge tool
+  cleantags = fetch --prune origin '+refs/tags/*:refs/tags/*'
+
+  # stash
+  ss = stash # stash changes
+  sl = stash list # list stashes
+  sa = stash apply # apply stash (restore changes)
+  sd = stash drop # drop stashes (destory changes)
+
+  # tag
+  t = tag -n # show tags with <n> lines of each tag message
+
+  # delete merged branches or gone
+  dmb = "!git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done"
+
+  # pull
+  rb = "!fn() { git rebase --autosquash --no-keep-empty -i HEAD~$1; }; fn"
+  rbo = "!fn() { git rebase -r origin/master; }; fn"
+
+  cos = "!fn() { git stash && git checkout $* && git stash pop; }; fn"
+  co = checkout
+  #co checkout = co
+  # summary of what you're going to push
+  sl = show --format=%B
+  lg = log --graph --no-merges --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%ae>%Creset' --abbrev-commit --date=iso
+  lgs = log --graph --no-merges --pretty=format:'**%s (%h)**'
+  lghtml = "log  --pretty=format:'<code><span style=color:#f00000;><a href=https://git.corp.adobe.com/saasbase/saasbase-deployment/commit/%h>%h</a></span> - %s <span style=color:#0000f0;>(%cd) </span><span style=color:#0000f0;>%an</span></code></br>' --abbrev-commit --date=short"
+  logfile = log --name-only --follow --all --
+  # changes since we last did a push
+  whatchanged-remote = whatchanged -p origin/master..
+  br = !git --no-pager branch -vvv --color=always
+	bra = "!for branch in $(git branch -r | grep -v HEAD | grep -v attic | grep -v playground | grep -v wip) ;do printf \"%-50s | %-30s %s\n\" \"$(git show --format='%ci %cr' $branch | head -n 1)\" \"$branch\" \"$(git log --format=%B -n 1 $branch | head -1)\"; done | sort -r"
+  bral = "!for branch in $(git branch -r | grep -v HEAD) ;do printf \"%-50s | %-30s\n\" \"$(git show --format='%ci %cr' $branch | head -n 1)\" \"$branch\"; done | sort -r"
+  ci = commit
+  st = status
+  g = grep --break --heading --line-number
+  pushf = push --force-with-lease
+
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+
+[rebase]
+	autoStash = true
+
+[pager]
+    status = true
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
