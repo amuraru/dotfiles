@@ -192,7 +192,7 @@
   sl = show --format=%B
   lg = log --graph --no-merges --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%ae>%Creset' --abbrev-commit --date=iso
   lgs = log --graph --no-merges --pretty=format:'**%s (%h)**'
-  lghtml = "log  --pretty=format:'<code><span style=color:#f00000;><a href=https://git.corp.adobe.com/saasbase/saasbase-deployment/commit/%h>%h</a></span> - %s <span style=color:#0000f0;>(%cd) </span><span style=color:#0000f0;>%an</span></code></br>' --abbrev-commit --date=short"
+  lghtml = "log  --pretty=format:'<code><span style=color:#f00000;><a href=/commit/%h>%h</a></span> - %s <span style=color:#0000f0;>(%cd) </span><span style=color:#0000f0;>%an</span></code></br>' --abbrev-commit --date=short"
   logfile = log --name-only --follow --all --
   # changes since we last did a push
   whatchanged-remote = whatchanged -p origin/master..
