@@ -240,8 +240,8 @@ compdef _env_files env
 # Gitstatus
 [ -f /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh ] && source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
 
-# FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# FZF (self-contained: key bindings + completion, no generated ~/.fzf.zsh needed)
+command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
 
 # Jabba (Java version manager)
 [ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"

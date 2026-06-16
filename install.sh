@@ -118,16 +118,10 @@ link gitconfig      "$HOME/.gitconfig"
 link ghostty/config "$HOME/.config/ghostty/config"
 
 # ---------------------------------------------------------------------------
-# 6. fzf shell integration (generates ~/.fzf.zsh, which zshrc sources)
+# 6. Seed local secrets file (never overwrites an existing one)
 # ---------------------------------------------------------------------------
-if [ -x "$(brew --prefix)/opt/fzf/install" ]; then
-  info "Setting up fzf key bindings and completion"
-  "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc
-fi
-
-# ---------------------------------------------------------------------------
-# 7. Seed local secrets file (never overwrites an existing one)
-# ---------------------------------------------------------------------------
+# (fzf key bindings/completion are loaded directly by zshrc via `fzf --zsh` —
+#  no generated ~/.fzf.zsh needed.)
 if [ ! -f "$HOME/.zshrc.local" ]; then
   cp "$DOTFILES/zshrc.local.example" "$HOME/.zshrc.local"
   chmod 600 "$HOME/.zshrc.local"

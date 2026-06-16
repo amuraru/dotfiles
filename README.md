@@ -28,8 +28,9 @@ git clone https://github.com/amuraru/dotfiles ~/dotfiles
 3. Clone the custom theme/plugins: **powerlevel10k**, **zsh-autosuggestions**, **zsh-syntax-highlighting**.
 4. Install the **MesloLGS NF** font (macOS).
 5. Symlink the dotfiles into `$HOME` (backing up any existing real files to `*.bak`).
-6. Set up fzf key bindings/completion (generates `~/.fzf.zsh`).
-7. Seed `~/.zshrc.local` from the template.
+6. Seed `~/.zshrc.local` from the template.
+
+(fzf key bindings/completion load automatically via `fzf --zsh` in `zshrc`.)
 
 Optional extras (build libs, `gitstatus`, VS Code) are listed commented-out in
 `install.sh` — uncomment what you need.
