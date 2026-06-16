@@ -1,0 +1,18 @@
+# =============================================================================
+# ~/.zshrc.local  —  machine-specific config and SECRETS  (NEVER committed)
+# =============================================================================
+# Copy this file to ~/.zshrc.local and fill in real values:
+#
+#   cp zshrc.local.example ~/.zshrc.local
+#   chmod 600 ~/.zshrc.local
+#   $EDITOR ~/.zshrc.local
+#
+# zshrc sources ~/.zshrc.local at the very end if it exists.
+# Keep real credentials ONLY here. This file (the .example) must stay free of
+# real secrets so it is safe to commit.
+# =============================================================================
+# Claude Code via AWS Bedrock (optional)
+# -----------------------------------------------------------------------------
+# export AWS_BEARER_TOKEN_BEDROCK='<your-bedrock-token>'
+# export CLAUDE_CODE_USE_BEDROCK=1
+# export AWS_REGION=us-west-2

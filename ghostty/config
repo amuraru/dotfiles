@@ -1,0 +1,7 @@
+# Ghostty configuration
+# Reload after editing with: Cmd+Shift+, (or quit and relaunch)
+
+# Font: required for powerlevel10k glyphs/powerline separators to render
+# correctly (matches the MesloLGS NF that `p10k configure` set for iTerm2).
+font-family = MesloLGS NF
+font-size = 13

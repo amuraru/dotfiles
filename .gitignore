@@ -1,0 +1,12 @@
+# Never commit local/secret overrides — these live in $HOME, not the repo.
+zshrc.local
+.zshrc.local
+.secrets
+.gitconfig.user
+*.local
+
+# Editor / OS cruft
+.DS_Store
+*.swp
+*.bak
+*~
